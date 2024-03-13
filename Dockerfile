@@ -122,7 +122,7 @@ RUN pip install --no-cache-dir \
 # Install Odoo from GitHub repository
 ARG odoo_org_repo=forgeflow/odoo
 ARG odoo_version
-RUN git clone --depth 1 --branch 15.0-pri-ci https://github.com/forgeflow/odoo /opt/odoo \
+RUN git clone --depth 1 --branch 15.0-bms-ci https://github.com/forgeflow/odoo /opt/odoo \
     && pip install --no-cache-dir -e /opt/odoo \
     && pip list
 
