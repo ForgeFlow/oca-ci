@@ -119,14 +119,11 @@ RUN pip install --no-cache-dir \
   coverage \
   websocket-client
 
-# Install Odoo (use ADD for correct layer caching)
-ARG odoo_org_repo=odoo/odoo
-ADD https://api.github.com/repos/$odoo_org_repo/git/refs/heads/$odoo_version /tmp/odoo-version.json
-RUN mkdir /tmp/getodoo \
-    && (curl -sSL https://github.com/$odoo_org_repo/tarball/$odoo_version | tar -C /tmp/getodoo -xz) \
-    && mv /tmp/getodoo/* /opt/odoo \
-    && rmdir /tmp/getodoo
-RUN pip install --no-cache-dir -e /opt/odoo \
+# Install Odoo from GitHub repository
+ARG odoo_org_repo=forgeflow/odoo
+ARG odoo_version
+RUN git clone --depth 1 --branch 15.0-pri-ci https://github.com/forgeflow/odoo /opt/odoo \
+    && pip install --no-cache-dir -e /opt/odoo \
     && pip list
 
 # Make an empty odoo.cfg
